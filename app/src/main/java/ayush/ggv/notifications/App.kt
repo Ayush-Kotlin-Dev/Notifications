@@ -9,15 +9,13 @@ import android.os.Build
 class App  : Application(){
     override fun onCreate() {
         super.onCreate()
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-          val counterChannel = NotificationChannel(
-              "Counter_Channel",
-              "Counter Channel",
-                NotificationManager.IMPORTANCE_LOW
-          )
-            val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannel(counterChannel)
-        }
+        val counterChannel = NotificationChannel(
+            "Counter_Channel",
+            "Counter Channel",
+              NotificationManager.IMPORTANCE_LOW
+        )
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.createNotificationChannel(counterChannel)
     }
 
 }
