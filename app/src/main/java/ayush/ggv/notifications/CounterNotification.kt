@@ -16,9 +16,13 @@ class CounterNotification(
 
     fun counterNotification(counter: Int) {
 
-        val flag = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-            PendingIntent.FLAG_CANCEL_CURRENT
-        else 0
+        val flag = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            } else {
+                PendingIntent.FLAG_CANCEL_CURRENT
+            }
+        } else 0
 
         val intent = Intent(context, MainActivity::class.java)
         val notificationClickPendingIntent = PendingIntent.getActivity(
@@ -68,7 +72,7 @@ class CounterNotification(
             context,
             requestCode,
             intent,
-            flag
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) flag or PendingIntent.FLAG_IMMUTABLE else flag
         )
     }
 
